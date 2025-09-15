@@ -1,19 +1,19 @@
-Settings to manage and configure a Firebase App Hosting backend.
+# Settings to manage and configure a Firebase App Hosting backend.
 # https://firebase.google.com/docs/app-hosting/configure
 runConfig:
-  minInstances: 0
+  minInstances: 2
+  maxInstances: 100
+  concurrency: 100
+  cpu: 2
+  memoryMiB: 1024
 backend:
   id: container-tracker-me5sv
   region: us-central1
-  entrypoint: next start
-serving-static:
-  - id: static
-    directory: .next/static
+rewrites:
+  - source: /.*
+    destination: /__next/server_build
 headers:
   - source: /_next/static/**
     headers:
       - key: Cache-Control
         value: 'public, max-age=31536000, immutable'
-rewrites:
-  - source: /**
-    destination: /_next/static/server/pages/index.html
